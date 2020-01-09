@@ -18,7 +18,7 @@
 
 于是，问题就转化为：如何求一个矩阵的n次方，即$A^{n}=?$。
 
-最简单的情况即A为对角阵或幂等矩阵（零矩阵当然是最最简单的情况）。对于对角阵$A=\left(begin{matrix}d_1 &0&0\end{matrix}\right)$而言$A^{n}=$
+最简单的情况即A为对角阵或幂等矩阵（零矩阵当然是最最简单的情况）。对于对角阵$A=\left( \begin{matrix} d_0 & 0 & \cdots&0 \\ \vdots&\ddots&\cdots&\vdots \\ 0&0&\cdots&d_{n} \end{matrix} \right)$而言，$A^{n}=\left(\begin{matrix}d_0^{n}&0&\cdots&0 \\ \vdots & \ddots & \cdots & \vdots \\ 0&0&\cdots&d_n^n\end{matrix}\right)$。幂等矩阵即有$A^n = A$。
 
 ## 矩阵分解
 
