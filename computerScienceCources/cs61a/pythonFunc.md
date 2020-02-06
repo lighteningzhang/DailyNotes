@@ -21,5 +21,8 @@ __init__函数初始化类对象，在调用类内函数时，类对象以参数
 
 ## python list 删除元素
 
+del (是python固有方法非list特有)
 
+remove (特定元素)
 
+pop(index) (知道特定元素下标)
