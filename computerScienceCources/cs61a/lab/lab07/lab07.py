@@ -102,7 +102,6 @@ def is_bst(t):
             val = min(bst_min(t.branches[0]),val)
         if len(t.branches) == 2:
             val = min(bst_min(t.branches[0]),val)
-            val = min(bst_min(t.branches[1]),val)
         
         # print("cur min val: {0}".format(val))
         return val
@@ -114,7 +113,6 @@ def is_bst(t):
         if len(t.branches)==1:
             val = max(bst_max(t.branches[0]),val)
         if len(t.branches) == 2:
-            val = max(bst_max(t.branches[0]),val)
             val = max(bst_max(t.branches[1]),val)
         # print("cur val: {0}".format(val))
         return val

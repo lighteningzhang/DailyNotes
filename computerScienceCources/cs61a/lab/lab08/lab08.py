@@ -3,7 +3,6 @@
 # Linked lists
 def insert(link, value, index):
     """Insert a value into a Link at the given index.
-
     >>> link = Link(1, Link(2, Link(3)))
     >>> print(link)
     <1 2 3>
@@ -17,7 +16,14 @@ def insert(link, value, index):
     IndexError
     """
     "*** YOUR CODE HERE ***"
-
+    if index is 0:
+        # link指向原有内存空间
+        link.rest = Link(link.first,link.rest)
+        link.first = value
+    elif link.rest is link.empty:
+        print("IndexError")
+    else:
+        insert(link.rest,value,index-1)
 
 # Recursion/Tree Recursion
 def insert_into_all(item, nested_list):
@@ -30,7 +36,11 @@ def insert_into_all(item, nested_list):
     [[0], [0, 1, 2], [0, 3]]
     """
     "*** YOUR CODE HERE ***"
-
+    result = []
+    for i in nested_list:
+        result.append([item]+i)
+    # print("result: ",result)
+    return result
 def subseqs(s):
     """Assuming that S is a list, return a nested list of all subsequences
     of S (a list of lists). The subsequences can appear in any order.
@@ -42,6 +52,15 @@ def subseqs(s):
     [[]]
     """
     "*** YOUR CODE HERE ***"
+    nested_list = []
+    if s:
+        sublist = subseqs(s[1:])
+        nested_list.extend(sublist)
+        insert_into_all(s[0],sublist)
+    else:
+        nested_list.append([])
+    # print(nested_list)
+    return nested_list
 def inc_subseqs(s):
     """Assuming that S is a list, return a nested list of all subsequences
     of S (a list of lists) for which the elements of the subsequence
@@ -58,14 +77,16 @@ def inc_subseqs(s):
     """
     def subseq_helper(s, prev):
         if not s:
-            return ____________________
+            return [[]]
         elif s[0] < prev:
-            return ____________________
+            return subseq_helper(s[1:],prev)
         else:
-            a = ______________________
-            b = ______________________
-            return insert_into_all(________, ______________) + ________________
-    return subseq_helper(____, ____)
+            a = subseq_helper(s[1:],prev)
+            # print("a: ",a)
+            b = subseq_helper(s[1:],s[0])
+            print("b: ",b)
+            return insert_into_all(s[0] , b) + a
+    return subseq_helper(s, 0)
 
 # Tree class
 class Tree:
