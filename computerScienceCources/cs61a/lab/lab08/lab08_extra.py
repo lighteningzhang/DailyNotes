@@ -219,7 +219,7 @@ def permutations(seq):
                 yield perm[:i]+[seq[0]]+perm[i:]
 
 # Recursive Objects
-def deep_len(lnk):
+def deep_len(link):
     """ Returns the deep length of a possibly deep linked list.
 
     >>> deep_len(Link(1, Link(2, Link(3))))
@@ -234,7 +234,14 @@ def deep_len(lnk):
     5
     """
     "*** YOUR CODE HERE ***"
-    
+    res = 0
+    if type(link.first)==int:
+        res+=1
+    elif isinstance(link.first, Link):
+        res+=deep_len(link.first)
+    if isinstance(link.rest, Link):
+        res += deep_len(link.rest)
+    return res
 def make_to_string(front, mid, back, empty_repr):
     """ Returns a function that turns linked lists to strings.
 
@@ -251,6 +258,13 @@ def make_to_string(front, mid, back, empty_repr):
     '()'
     """
     "*** YOUR CODE HERE ***"
+    def link_to_str(link):
+        if link == Link.empty:
+            return empty_repr
+        else:
+            return front+str(link.first)+mid+link_to_str(link.rest)+back
+    return link_to_str
+    
 def prune_small(t, n):
     """Prune the tree mutatively, keeping only the n branches
     of each node with the smallest label.
@@ -268,11 +282,11 @@ def prune_small(t, n):
     >>> t3
     Tree(6, [Tree(1), Tree(3, [Tree(1), Tree(2)])])
     """
-    while ___________________________:
-        largest = max(_______________, key=____________________)
-        _________________________
-    for __ in _____________:
-        ___________________
+    while len(t.branches)>n:
+        largest = max(t.branches, key= lambda x:x.label)
+        t.branches = t.branches[:t.branches.index(largest)]+t.branches[t.branches.index(largest)+1:]
+    for bran in t.branches:
+        prune_small(bran,n)
 
 # Recursion / Tree Recursion
 def num_trees(n):
@@ -296,7 +310,15 @@ def num_trees(n):
 
     """
     "*** YOUR CODE HERE ***"
-
+    if n==1:
+        return 1
+    elif n==2:
+        return 1
+    else:
+        res = 0
+        for i in range(1,n):
+            res+=num_trees(n-i)*num_trees(i)
+        return res 
 
 # Tree class
 class Tree:
