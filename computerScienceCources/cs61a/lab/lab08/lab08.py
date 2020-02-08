@@ -75,17 +75,20 @@ def inc_subseqs(s):
     >>> sorted(seqs2)
     [[], [1], [1], [1, 1], [1, 1, 2], [1, 2], [1, 2], [2]]
     """
+    # 对于当前值有两种选择: 保留当前值和丢弃当前值，如果当前值比之前的值小则直接丢弃当前值
     def subseq_helper(s, prev):
         if not s:
             return [[]]
         elif s[0] < prev:
             return subseq_helper(s[1:],prev)
         else:
-            a = subseq_helper(s[1:],prev)
+            a = subseq_helper(s[1:],prev)#prev,不选择s[0]
             # print("a: ",a)
-            b = subseq_helper(s[1:],s[0])
-            print("b: ",b)
-            return insert_into_all(s[0] , b) + a
+            b = subseq_helper(s[1:],s[0])#选择加入s[0]
+            # print("b: ",b)
+            rt = insert_into_all(s[0] , b)+a
+            print(rt)
+            return rt
     return subseq_helper(s, 0)
 
 # Tree class

@@ -1,3 +1,5 @@
 from lab08 import *
+from lab08_extra import *
 if __name__ == "__main__":
-    eqs = inc_subseqs([1, 3, 2])
+    di = {1:'a',3:'c'}
+    # di.get(1)

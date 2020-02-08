@@ -27,17 +27,27 @@ class Keyboard:
 
     def __init__(self, *args):
         "*** YOUR CODE HERE ***"
-
+        self.buttons = {}
+        
+        for arg in args:
+            assert  isinstance(arg,Button), 'Please give button instance as input'
+            self.buttons[arg.pos] = arg
     def press(self, info):
         """Takes in a position of the button pressed, and
         returns that button's output"""
         "*** YOUR CODE HERE ***"
-
+        if info in self.buttons:
+            return self.buttons[info].key
+        else:
+            return ''
     def typing(self, typing_input):
         """Takes in a list of positions of buttons pressed, and
         returns the total output"""
         "*** YOUR CODE HERE ***"
-
+        output=''
+        for pos in typing_input:
+            output+=self.press(pos)
+        return output
 class Button:
     """
     Represents a single button
@@ -81,7 +91,25 @@ def make_advanced_counter_maker():
     1
     """
     "*** YOUR CODE HERE ***"
-
+    global_count = 0
+    def local_counter():
+        count = 0
+        def incount(input):
+            nonlocal global_count,count
+            if input is 'count':
+                count += 1
+                return count
+            elif input == 'global-count':
+                global_count += 1
+                return global_count
+            elif input is 'reset':
+                count = 0
+                return count
+            elif input == 'global-reset':
+                global_count = 0
+                return global_count
+        return incount
+    return local_counter
 # Mutable Lists
 def trade(first, second):
     """Exchange the smallest prefixes of first and second that have equal sum.
@@ -113,8 +141,17 @@ def trade(first, second):
     m, n = 1, 1
 
     "*** YOUR CODE HERE ***"
-
-    if False: # change this line!
+    deal = False
+    for i in range(1,len(first)):
+        for j in range(1,len(second)):
+            if sum(first[:i])==sum(second[:j]):
+                deal = True
+                m = i
+                n = j
+                break
+        if deal:
+            break
+    if deal: # change this line!
         first[:m], second[:n] = second[:n], first[:m]
         return 'Deal!'
     else:
@@ -145,7 +182,12 @@ def shuffle(cards):
     """
     assert len(cards) % 2 == 0, 'len(cards) must be even'
     "*** YOUR CODE HERE ***"
-
+    cp_f_half = cards[:len(cards)//2]
+    cp_s_half = cards[len(cards)//2:]
+    cp = []
+    for i in range(len(cards)//2):
+        cp += [cp_f_half[i],cp_s_half[i]]
+    return cp 
 # Generators
 def permutations(seq):
     """Generates all permutations of the given sequence. Each permutation is a
@@ -169,12 +211,12 @@ def permutations(seq):
     >>> sorted(permutations("ab"))
     [['a', 'b'], ['b', 'a']]
     """
-    if ____________________:
-        yield ____________________
+    if len(seq)==1:  
+        yield seq
     else:
-        for perm in _____________________:
-            for _____ in ________________:
-                _________________________
+        for perm in permutations(seq[1:]):
+            for i in range(len(perm)+1):
+                yield perm[:i]+[seq[0]]+perm[i:]
 
 # Recursive Objects
 def deep_len(lnk):
@@ -192,6 +234,7 @@ def deep_len(lnk):
     5
     """
     "*** YOUR CODE HERE ***"
+    
 def make_to_string(front, mid, back, empty_repr):
     """ Returns a function that turns linked lists to strings.
 
